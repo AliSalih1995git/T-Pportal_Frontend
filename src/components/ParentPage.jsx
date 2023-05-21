@@ -9,7 +9,7 @@ function ParentPage() {
   const fetchStudents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:6001/api/parents/getAllStudentData"
+        `${process.env.REACT_APP_BACKEND_URL}/api/parents/getAllStudentData`
       );
       setAllStudents(response.data);
     } catch (error) {

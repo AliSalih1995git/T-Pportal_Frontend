@@ -8,12 +8,14 @@ import React, { useEffect, useState } from "react";
 //   mark: "",
 // };
 function TeacherPage() {
+  console.log(process.env.REACT_APP_BACKEND_URL, "DDDDDDDD");
+
   const [allstudent, setAllstudent] = useState([]);
 
   const fetchBatches = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:6001/api/teacher/getAllStudent"
+        `${process.env.REACT_APP_BACKEND_URL}/api/teacher/getAllStudent`
       );
       setAllstudent(response.data);
     } catch (error) {
@@ -38,7 +40,7 @@ function TeacherPage() {
     const student = allstudent.find((student) => student._id === studentId);
     try {
       const response = await axios.post(
-        "http://localhost:6001/api/teacher/addResult",
+        `${process.env.REACT_APP_BACKEND_URL}/api/teacher/addResult`,
         {
           studentId: student._id,
           batchId: student.batch,
@@ -98,10 +100,10 @@ function TeacherPage() {
                   {allstudent.map((student) => (
                     <tr key={student._id}>
                       <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                        {student.name}
+                        {student.parent}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                        {student.parent}
+                        {student.name}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                         <select
@@ -117,6 +119,7 @@ function TeacherPage() {
                             )
                           }
                         >
+                          <option>Select Batches</option>
                           {student.batches.map((batch) => (
                             <option key={batch} value={batch}>
                               {batch}

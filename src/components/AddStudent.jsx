@@ -10,7 +10,7 @@ function AddStudent() {
   const fetchBatches = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:6001/api/teacher/getAllBatches"
+        `${process.env.REACT_APP_BACKEND_URL}/api/teacher/getAllBatches`
       );
       setBatches(response.data);
     } catch (error) {
@@ -32,7 +32,7 @@ function AddStudent() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:6001/api/teacher/createStudent",
+        `${process.env.REACT_APP_BACKEND_URL}/api/teacher/createStudent`,
         {
           name: studentName,
           parent: parentName,

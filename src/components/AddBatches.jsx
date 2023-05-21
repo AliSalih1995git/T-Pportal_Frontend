@@ -8,7 +8,7 @@ function AddBatches() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:6001/api/teacher/createBatches",
+        `${process.env.REACT_APP_BACKEND_URL}/api/teacher/createBatches`,
         name
       );
     } catch (error) {
