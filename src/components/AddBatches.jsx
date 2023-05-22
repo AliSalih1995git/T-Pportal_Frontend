@@ -34,14 +34,14 @@ function AddBatches() {
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus: text-gray-700 "
               required
             />
           </div>
           <div className="text-right">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg focus:outline-none"
+              className="bg-gray-500 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded-lg focus:outline-none"
             >
               Add Batches
             </button>

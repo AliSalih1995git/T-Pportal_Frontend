@@ -4,13 +4,12 @@ import axios from "axios";
 
 function ParentPage() {
   const [allStudents, setAllStudents] = useState([]);
-  const [selectedParent, setSelectedParent] = useState("");
-  const [singleStudent, setSingleStudent] = useState([]);
+  const [batch, setBatch] = useState("");
 
   const fetchStudents = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/parents/getAllParentData`
+        `${process.env.REACT_APP_BACKEND_URL}/api/parents/getAllStudentData`
       );
       setAllStudents(response.data);
     } catch (error) {
@@ -22,27 +21,7 @@ function ParentPage() {
     fetchStudents();
   }, []);
 
-  const uniqueParents = [...new Set(allStudents.map((obj) => obj.parent))];
-
-  const handleDropdown = async (e) => {
-    const query = e.target.value;
-    setSelectedParent(query);
-  };
-
-  const handleClick = async () => {
-    if (selectedParent) {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/parents/getAllStudentData?parent=${selectedParent}`
-        );
-        setSingleStudent(response.data);
-      } catch (error) {
-        console.log("Error fetching students:", error);
-      }
-    }
-  };
-  // console.log(selectedParent, "str");
-  // console.log(singleStudent, "AAAAAAAAAA");
+  console.log(allStudents);
   return (
     <div>
       <Header />
@@ -51,27 +30,6 @@ function ParentPage() {
           <div className="overflow-x-auto">
             <div className="p-1.5 w-full inline-block align-middle">
               <div className="overflow-hidden border rounded-lg">
-                <div className="relative  flex justify-between ">
-                  <select
-                    className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-indigo-600"
-                    onChange={(e) => handleDropdown(e)}
-                  >
-                    <option>Select Parent</option>
-                    {uniqueParents.map((student) => (
-                      <option key={student} value={student}>
-                        {student}
-                      </option>
-                    ))}
-                  </select>
-                  <button
-                    type="submit"
-                    className="bg-gray-500 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded-lg focus:outline-none"
-                    onClick={handleClick}
-                  >
-                    Go
-                  </button>
-                </div>
-
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
@@ -103,19 +61,23 @@ function ParentPage() {
                   </thead>
 
                   <tbody className="divide-y divide-gray-200">
-                    {singleStudent.map((item) => (
-                      <tr key={item._id}>
+                    {allStudents.map((student) => (
+                      <tr key={student._id}>
                         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {item.student.parent}
+                          {student.parent}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {item.student.name}
+                          {student.name}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {item.batch.name}
+                          {student.batches}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {item.marks}
+                          {student.marks}
+                        </td>
+
+                        <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                          {student.mark}
                         </td>
                       </tr>
                     ))}
